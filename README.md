@@ -36,4 +36,4 @@ Neste projeto, a **injeção de dependência** é usada para fornecer as impleme
 
 ## Estrutura de Pastas
 
-A estrutura do projeto segue as boas práticas de Clean Architecture:
+A estrutura do projeto segue as boas práticas de Clean Architecture
