@@ -1,4 +1,4 @@
-# Projeto: Clean Architecture com CQRS, Inversão de Dependência e Injeção de Dependência
+# Projeto: Clean Architecture com CQRS, IoC, Padrão Repository, principios SOLID
 
 Este projeto tem como objetivo demonstrar a criação de uma aplicação utilizando **Clean Architecture** e outros conceitos importantes, como **CQRS (Command Query Responsibility Segregation)**, **Inversão de Dependência** (Dependency Inversion Principle), **Injeção de Dependência** (Dependency Injection), e outras boas práticas no desenvolvimento de software.
 
