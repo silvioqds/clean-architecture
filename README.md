@@ -1,4 +1,4 @@
-# Projeto: Clean Architecture com CQRS, IoC, Padrão Repository, principios SOLID
+# Projeto: Clean Architecture com CQRS, IoC, Padrão Repository, Princípios SOLID, Code First
 
 Este projeto tem como objetivo demonstrar a criação de uma aplicação utilizando **Clean Architecture** e outros conceitos importantes, como **CQRS (Command Query Responsibility Segregation)**, **Inversão de Dependência** (Dependency Inversion Principle), **Injeção de Dependência** (Dependency Injection), e outras boas práticas no desenvolvimento de software.
 
