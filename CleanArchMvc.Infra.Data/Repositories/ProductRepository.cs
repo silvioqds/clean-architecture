@@ -13,40 +13,40 @@ namespace CleanArchMvc.Infra.Data.Repositories
             _context = context;
         }
 
-        public async Task<Product> CreateAsync(Product product)
+        public async Task<Product> CreateAsync(Product product, CancellationToken cancellationToken)
         {
             _context.Add(product);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return product;
         }
 
-        public async Task<Product> GetByIdAsync(int? id)
+        public async Task<Product> GetByIdAsync(int? id, CancellationToken cancellationToken)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.FindAsync(id, cancellationToken);
 
         }
 
-        public Task<Product> GetProductCategoryAsync(int? id)
+        public async Task<Product> GetProductCategoryAsync(int? id, CancellationToken cancellationToken)
         {
-            return _context.Products.Include(x => x.Category).SingleOrDefaultAsync(p => p.Id == id);
+            return await _context.Products.Include(x => x.Category).SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<IEnumerable<Product>> GetProductsAsync(CancellationToken cancellationToken)
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.ToListAsync(cancellationToken);
         }
 
-        public async Task<Product> UpdateAsync(Product product)
+        public async Task<Product> UpdateAsync(Product product, CancellationToken cancellationToken)
         {
             _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return product;
         }
 
-        public async Task<Product> DeleteAsync(Product product)
+        public async Task<Product> DeleteAsync(Product product, CancellationToken cancellationToken)
         {
             _context.Remove(product);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return product;
         }
     }

@@ -1,37 +1,25 @@
-﻿using CleanArchMvc.Application.DTO;
+﻿using AutoMapper;
+using CleanArchMvc.Application.DTO;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Application.UseCases.Products.Commands;
-using CleanArchMvc.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.UseCases.Products.Handlers
 {
     public class ProductCreateCommandHandler : IRequestHandler<ProductCreateCommand, ProductDTO>
     {
         private readonly IProductService _productService;
-        public ProductCreateCommandHandler(IProductService productService)
+        private readonly IMapper _mapper;
+        public ProductCreateCommandHandler(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
 
         public async Task<ProductDTO> Handle(ProductCreateCommand request, CancellationToken cancellationToken)
         {
-            ProductDTO product = new ProductDTO()
-            {
-                Name = request.Name,
-                Description = request.Description,
-                Price = request.Price,
-                Stock = request.Stock,
-                Image = request.Image,
-                CategoryId = request.CategoryId,
-            };
-
-            return await _productService.Add(product);
+            ProductDTO product = _mapper.Map<ProductDTO>(request);
+            return await _productService.AddAsync(product, cancellationToken);
         }
     }
 }

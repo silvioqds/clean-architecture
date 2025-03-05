@@ -1,5 +1,4 @@
 ﻿using CleanArchMvc.Application.DTO;
-using CleanArchMvc.Domain.Entities;
 using MediatR;
 
 namespace CleanArchMvc.Application.UseCases.Products.Commands

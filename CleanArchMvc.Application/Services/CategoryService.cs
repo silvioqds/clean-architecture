@@ -18,29 +18,30 @@ namespace CleanArchMvc.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<CategoryDTO> GetById(int? id)
+        public async Task<CategoryDTO> GetByIdAsync(int? id, CancellationToken cancellationToken)
         {
-            return _mapper.Map<CategoryDTO>(await _categoryRepository.GetByIdAsync(id.GetValueOrDefault()));
+            return _mapper.Map<CategoryDTO>(await _categoryRepository.GetByIdAsync(id.GetValueOrDefault(), cancellationToken));
         }
 
-        public async Task<IEnumerable<CategoryDTO>> GetCategories()
+        public async Task<IEnumerable<CategoryDTO>> GetCategoriesAsync(CancellationToken cancellationToken)
         {
-            return _mapper.Map<List<CategoryDTO>>(await _categoryRepository.GetCategoriesAsync());
+            return _mapper.Map<List<CategoryDTO>>(await _categoryRepository.GetCategoriesAsync(cancellationToken));
         }
 
-        public async Task Add(CategoryDTO dto)
+        public async Task AddAsync(CategoryDTO dto, CancellationToken cancellationToken)
         {
-            await _categoryRepository.CreateAsync(_mapper.Map<Category>(dto));
+            await _categoryRepository.CreateAsync(_mapper.Map<Category>(dto), cancellationToken);
         }
 
-        public async Task Update(CategoryDTO dto)
+        public async Task UpdateAsync(CategoryDTO dto, CancellationToken cancellationToken)
         {
-            await _categoryRepository.UpdateAsync(_mapper.Map<Category>(dto));
+            await _categoryRepository.UpdateAsync(_mapper.Map<Category>(dto), cancellationToken);
         }
 
-        public async Task Delete(int? id)
+        public async Task DeleteAsync(int? id, CancellationToken cancellationToken)
         {
-            await _categoryRepository.DeleteAsync(_mapper.Map<Category>(await _categoryRepository.GetByIdAsync(id)));
-        }              
+            Category category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
+            await _categoryRepository.DeleteAsync(_mapper.Map<Category>(category), cancellationToken);
+        }
     }
 }

@@ -17,33 +17,34 @@ namespace CleanArchMvc.Application.Services
             this._mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProducts()
+        public async Task<IEnumerable<ProductDTO>> GetProductsAsync(CancellationToken cancellationToken)
         {
-            return _mapper.Map<IEnumerable<ProductDTO>>(await _productRepository.GetProductsAsync());
+            return _mapper.Map<IEnumerable<ProductDTO>>(await _productRepository.GetProductsAsync(cancellationToken));
         }
-        public async Task<ProductDTO> GetById(int? id)
+        public async Task<ProductDTO> GetByIdAsync(int? id, CancellationToken cancellationToken)
         {
-            return _mapper.Map<ProductDTO>(await _productRepository.GetByIdAsync(id));
-        }
-
-        public async Task<ProductDTO> GetProductCategory(int? id)
-        {
-            return _mapper.Map<ProductDTO>(await _productRepository.GetProductCategoryAsync(id));
+            return _mapper.Map<ProductDTO>(await _productRepository.GetByIdAsync(id, cancellationToken));
         }
 
-        public async Task<ProductDTO> Add(ProductDTO dto)
+        public async Task<ProductDTO> GetProductCategoryAsync(int? id, CancellationToken cancellationToken)
+        {
+            return _mapper.Map<ProductDTO>(await _productRepository.GetProductCategoryAsync(id, cancellationToken));
+        }
+
+        public async Task<ProductDTO> AddAsync(ProductDTO dto, CancellationToken cancellationToken)
         {
             Product product = _mapper.Map<Product>(dto);
-            return _mapper.Map<ProductDTO>(await _productRepository.CreateAsync(product));
+            return _mapper.Map<ProductDTO>(await _productRepository.CreateAsync(product, cancellationToken));
         }
-        public async Task<ProductDTO> Update(ProductDTO dto)
+        public async Task<ProductDTO> UpdateAsync(ProductDTO dto, CancellationToken cancellationToken)
         {
-            return _mapper.Map<ProductDTO>(await _productRepository.UpdateAsync(_mapper.Map<Product>(dto)));
+            return _mapper.Map<ProductDTO>(await _productRepository.UpdateAsync(_mapper.Map<Product>(dto), cancellationToken));
         }
 
-        public async Task Delete(int? id)
+        public async Task DeleteAsync(int? id, CancellationToken cancellationToken)
         {
-            await _productRepository.DeleteAsync(_mapper.Map<Product>(await _productRepository.GetByIdAsync(id)));
+            Product product = await _productRepository.GetByIdAsync(id, cancellationToken);
+            await _productRepository.DeleteAsync(_mapper.Map<Product>(product), cancellationToken);
         }
     }
 }

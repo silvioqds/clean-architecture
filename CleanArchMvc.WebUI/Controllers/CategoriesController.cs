@@ -13,9 +13,9 @@ namespace CleanArchMvc.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var categories = await _categoryService.GetCategories();            
+            var categories = await _categoryService.GetCategoriesAsync(cancellationToken);            
             return View(categories);
         }
     }
