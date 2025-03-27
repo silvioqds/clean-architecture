@@ -13,7 +13,8 @@ namespace CleanArchMvc.Application.Mappings
     {
         public DTOToCommandMappingProfile()
         {
-            CreateMap<ProductDTO, ProductCommand>().ReverseMap();
+            CreateMap<ProductDTO, ProductCreateCommand>().ReverseMap();
+            CreateMap<ProductDTO, ProductUpdateCommand>().ReverseMap();
         }
     }
 }

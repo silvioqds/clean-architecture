@@ -37,8 +37,14 @@ namespace CleanArchMvc.Infra.Data.Repositories
         }
 
         public async Task<Product> UpdateAsync(Product product, CancellationToken cancellationToken)
-        {
-            _context.Products.Update(product);
+        {          
+            var existingProduct = _context.Products.Local.FirstOrDefault(p => p.Id == product.Id);
+
+            if (existingProduct != null)                   
+                _context.Entry(existingProduct).State = EntityState.Detached;
+                       
+            _context.Entry(product).State = EntityState.Modified;
+            
             await _context.SaveChangesAsync(cancellationToken);
             return product;
         }

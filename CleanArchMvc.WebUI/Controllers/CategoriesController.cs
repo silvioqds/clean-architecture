@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Application.DTO;
 using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.WebUI.Controllers
@@ -12,6 +13,7 @@ namespace CleanArchMvc.WebUI.Controllers
             _categoryService = categoryService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -25,6 +27,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View();
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CategoryDTO category)
         {
@@ -36,6 +39,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(category);
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpGet()]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -45,6 +49,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(categoryDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost()]
         public async Task<IActionResult> Edit(CategoryDTO categoryDto)
         {
@@ -63,6 +68,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(categoryDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet()]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -76,6 +82,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(categoryDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost(), ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -83,6 +90,8 @@ namespace CleanArchMvc.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -95,5 +104,7 @@ namespace CleanArchMvc.WebUI.Controllers
 
             return View(categoryDto);
         }
+
+
     }
 }

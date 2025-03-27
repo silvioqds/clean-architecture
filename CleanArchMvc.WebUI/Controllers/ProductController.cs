@@ -34,19 +34,20 @@ namespace CleanArchMvc.WebUI.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.CategoryId = new SelectList(await _categoryService.GetCategoriesAsync(CancellationToken.None), "Id", "Name");
-
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(ProductDTO productDto)
         {
+            ViewBag.CategoryId = new SelectList(await _categoryService.GetCategoriesAsync(CancellationToken.None), "Id", "Name");
             if (ModelState.IsValid)
             {
                 ProductCreateCommand createCommand = _mapper.Map<ProductCreateCommand>(productDto);
                 await _mediator.Send(createCommand, CancellationToken.None);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(productDto);
         }
 
@@ -67,13 +68,10 @@ namespace CleanArchMvc.WebUI.Controllers
         [HttpPost()]
         public async Task<IActionResult> Edit(ProductDTO productDto)
         {
-            if (ModelState.IsValid)
-            {
-                ProductUpdateCommand updateCommand = _mapper.Map<ProductUpdateCommand>(productDto);
-                await _mediator.Send(updateCommand, CancellationToken.None);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(productDto);
+
+            ProductUpdateCommand updateCommand = _mapper.Map<ProductUpdateCommand>(productDto);
+            await _mediator.Send(updateCommand, CancellationToken.None);
+            return RedirectToAction(nameof(Index));            
         }
 
         [HttpGet()]
